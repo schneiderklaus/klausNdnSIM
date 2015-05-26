@@ -42,21 +42,39 @@ public:
   virtual void
   afterReceiveInterest(const Face& inFace, const Interest& interest,
                        shared_ptr<fib::Entry> fibEntry, shared_ptr<pit::Entry> pitEntry);
+  using fw::Strategy;
 
-  Entry::Entry(const Name& prefix) :
-    m_prefix(prefix), m_strategy(nullptr)
+  MeasurementsAccessor::MeasurementsAccessor(Measurements& measurements,
+                                             const StrategyChoice& strategyChoice, const Strategy& strategy) :
+    m_measurements(measurements), m_strategyChoice(strategyChoice), m_strategy(&strategy)
   {
   }
 
-public:
-  static const Name STRATEGY_NAME;
+  MeasurementsAccessor::~MeasurementsAccessor()
+  {
+  }
 
-protected:
-  boost::random::mt19937 m_randomGenerator;
-};
+  shared_ptr<measurements::Entry> MeasurementsAccessor::filter(
+    const shared_ptr<measurements::Entry>& entry) const
+  {
+    if (entry == nullptr) {
+      return entry;
+    }
+
+    Entry::Entry(const Name& prefix) :
+    m_prefix(prefix), m_strategy(nullptr)
+    {
+    }
+
+
+  public:
+    static const Name STRATEGY_NAME;
+
+  protected:
+    boost::random::mt19937 m_randomGenerator;
+  };
 
 } // namespace fw
 } // namespace nfd
 
 #endif // NDNSIM_EXAMPLES_NDN_LOAD_BALANCER_RANDOM_LOAD_BALANCER_STRATEGY_HPP
-
