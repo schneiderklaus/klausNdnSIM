@@ -43,10 +43,10 @@ public:
   afterReceiveInterest(const Face& inFace, const Interest& interest,
                        shared_ptr<fib::Entry> fibEntry, shared_ptr<pit::Entry> pitEntry);
 
-  Entry::Entry(const Name& prefix) :
-    m_prefix(prefix), m_strategy(nullptr)
-  {
-  }
+  // Entry::Entry(const Name& prefix) :
+  //   m_prefix(prefix), m_strategy(nullptr)
+  // {
+  // }
 
 public:
   static const Name STRATEGY_NAME;
